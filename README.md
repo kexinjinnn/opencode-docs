@@ -3,8 +3,7 @@
 A mirror of the [opencode](https://opencode.ai) documentation.
 
 The documentation content lives in [`docs/`](./docs). These are the `.mdx` source
-files for the docs published at <https://opencode.ai/docs>, including the available
-translations.
+files (English) for the docs published at <https://opencode.ai/docs>.
 
 ## Attribution
 
