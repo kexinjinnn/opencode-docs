@@ -1,98 +1,18 @@
 {
-  // opencode reads config from (later overrides earlier):
-  //   ~/.config/opencode/opencode.json        (global)
-  //   <project>/opencode.json[c]               (project, committed)
-  //   <project>/opencode.local.json[c]         (project, gitignored secrets)
-  // Both .json and .jsonc (comments allowed) are accepted.
+  // Minimal, copy-safe opencode config. Everything here is inert until you
+  // change values — nothing launches a process or requires extra files.
+  // For a fuller, commented reference of all options, see opencode.full.jsonc.
 
-  // Always set $schema first — it enables autocomplete + validation in editors.
-  // Offline, point it at the mirrored copy in this repo (or a local absolute path):
+  // Enables editor autocomplete + validation. On a machine blocked from
+  // opencode.ai, point this at the mirrored schema in this repo instead, e.g.
+  //   "$schema": "/path/to/opencode-docs/site-assets/config.json"
   "$schema": "https://opencode.ai/config.json",
 
-  // ---- Models ---------------------------------------------------------------
-  // Default model, as "provider/model".
+  // Model to use, as "provider/model". Change to whatever you have access to.
   "model": "anthropic/claude-opus-4-8",
-  // Cheaper model used for side tasks (titles, summaries, compaction).
+  // Cheaper model for side tasks (titles, summaries).
   "small_model": "anthropic/claude-haiku-4-5",
 
-  // ---- Providers ------------------------------------------------------------
-  // Only needed to add a custom/self-hosted provider or override model options.
-  // The npm package is an @ai-sdk provider. Example: a local OpenAI-compatible
-  // endpoint (Ollama, vLLM, LM Studio, a gateway) — handy on a locked-down box.
-  "provider": {
-    "local": {
-      "npm": "@ai-sdk/openai-compatible",
-      "name": "Local",
-      "options": {
-        "baseURL": "http://localhost:11434/v1"
-      },
-      "models": {
-        "qwen2.5-coder": { "name": "Qwen2.5 Coder" }
-      }
-    }
-  },
-
-  // Restrict which providers load (omit to allow all that have credentials).
-  // "enabled_providers": ["anthropic", "local"],
-  // "disabled_providers": ["openai"],
-
-  // ---- Agents ---------------------------------------------------------------
-  // Per-agent overrides. "build" and "plan" are the built-in primary agents.
-  "agent": {
-    "build": {
-      "model": "anthropic/claude-opus-4-8"
-    },
-    // A custom subagent you can @-mention or hand off to.
-    "reviewer": {
-      "description": "Read-only code reviewer",
-      "mode": "subagent",
-      "prompt": "{file:./prompts/reviewer.md}", // load prompt from a file
-      "tools": { "write": false, "edit": false } // read-only
-    }
-  },
-  "default_agent": "build",
-
-  // ---- Permissions ----------------------------------------------------------
-  // Values: "allow" | "ask" | "deny". Tools that touch the world default safer.
-  // bash/edit can take per-pattern maps instead of a single value.
-  "permission": {
-    "edit": "ask",
-    "webfetch": "ask",
-    "bash": {
-      "*": "ask",
-      "git status": "allow",
-      "git diff *": "allow",
-      "rm *": "deny"
-    }
-  },
-
-  // ---- MCP servers ----------------------------------------------------------
-  "mcp": {
-    // Local server launched as a subprocess.
-    "filesystem": {
-      "type": "local",
-      "command": ["npx", "-y", "@modelcontextprotocol/server-filesystem", "."],
-      "enabled": true
-    },
-    // Remote server over HTTP.
-    "sentry": {
-      "type": "remote",
-      "url": "https://mcp.example.com/sse",
-      "enabled": false,
-      "headers": { "Authorization": "Bearer {env:SENTRY_TOKEN}" }
-    }
-  },
-
-  // ---- Extra instructions ---------------------------------------------------
-  // Files merged into the system prompt (globs allowed). AGENTS.md is auto-loaded.
-  "instructions": ["CONTRIBUTING.md", ".cursor/rules/*.md"],
-
-  // ---- Misc -----------------------------------------------------------------
-  "share": "manual",            // "manual" | "auto" | "disabled" (needs opencode.ai)
-  "autoupdate": false,          // disabled: blocked machine can't reach opencode.ai to update
-  "logLevel": "INFO"            // DEBUG | INFO | WARN | ERROR
+  // Don't try to self-update (blocked machine can't reach opencode.ai).
+  "autoupdate": false
 }
-
-// Value interpolation usable in string fields:
-//   {env:VAR}        -> environment variable
-//   {file:./path}    -> contents of a file (great for prompts/keys)
