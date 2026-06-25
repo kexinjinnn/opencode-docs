@@ -88,7 +88,6 @@
   "instructions": ["CONTRIBUTING.md", ".cursor/rules/*.md"],
 
   // ---- Misc -----------------------------------------------------------------
-  "theme": "opencode",          // see site-assets/theme.json for the theme schema
   "share": "manual",            // "manual" | "auto" | "disabled" (needs opencode.ai)
   "autoupdate": true,
   "logLevel": "INFO"            // DEBUG | INFO | WARN | ERROR
