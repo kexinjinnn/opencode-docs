@@ -14,6 +14,10 @@ files (English) for the docs published at <https://opencode.ai/docs>.
 - [`site-assets/config.json`](./site-assets/config.json) — the authoritative JSON
   Schema (use it as `$schema` for editor autocomplete/validation).
 
+One practical tip for the blocked machine: in your real config, set `$schema` to a
+local path instead of the opencode.ai URL so the editor can validate offline, e.g.
+`"$schema": "/path/to/opencode-docs/site-assets/config.json"`.
+
 ## Other site assets
 
 [`site-assets/`](./site-assets) mirrors the static files that opencode serves from
