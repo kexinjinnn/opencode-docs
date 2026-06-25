@@ -89,7 +89,7 @@
 
   // ---- Misc -----------------------------------------------------------------
   "share": "manual",            // "manual" | "auto" | "disabled" (needs opencode.ai)
-  "autoupdate": true,
+  "autoupdate": false,          // disabled: blocked machine can't reach opencode.ai to update
   "logLevel": "INFO"            // DEBUG | INFO | WARN | ERROR
 }
 
