@@ -5,6 +5,17 @@ A mirror of the [opencode](https://opencode.ai) documentation.
 The documentation content lives in [`docs/`](./docs). These are the `.mdx` source
 files (English) for the docs published at <https://opencode.ai/docs>.
 
+## Writing `opencode.json` / `opencode.jsonc`
+
+- [`examples/opencode.jsonc`](./examples/opencode.jsonc) — a worked, fully
+  commented example config to copy from.
+- [`CONFIG.md`](./CONFIG.md) — every top-level config field, auto-generated from
+  the schema.
+- [`site-assets/config.json`](./site-assets/config.json) — the authoritative JSON
+  Schema (use it as `$schema` for editor autocomplete/validation).
+
+## Other site assets
+
 [`site-assets/`](./site-assets) mirrors the static files that opencode serves from
 `https://opencode.ai/` (config/theme/TUI JSON schemas, the OpenAPI spec, the
 changelog, and the install script) — useful when running opencode on a machine
